@@ -1,3 +1,83 @@
 * {
   box-sizing: border-box;
 }
+
+$board-size: 240px;
+$cell-size: calc(#{$board-size / 3});
+$border-style: 1px solid black;
+
+.game {
+  .status {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+
+    div:first-child {
+      padding-right: 10px;
+    }
+  }
+
+  .board {
+    display: flex;
+    width: $board-size;
+    height: $board-size;
+
+    .col {
+      .cell {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: $cell-size;
+        width: $cell-size;
+        cursor: pointer;
+        font-size: 2.5em;
+      }
+    }
+
+    .col1 {
+      .cell1 {
+        border-right: $border-style;
+        border-bottom: $border-style;
+      }
+
+      .cell2 {
+        border-right: $border-style;
+      }
+
+      .cell3 {
+        border-right: $border-style;
+        border-top: $border-style;
+      }
+    }
+
+    .col2 {
+      .cell4 {
+        border-bottom: $border-style;
+      }
+
+      .cell5 {
+        border: none;
+      }
+
+      .cell6 {
+        border-top: $border-style;
+      }
+    }
+
+    .col3 {
+      .cell7 {
+        border-left: $border-style;
+        border-bottom: $border-style;
+      }
+
+      .cell8 {
+        border-left: $border-style;
+      }
+
+      .cell9 {
+        border-top: $border-style;
+        border-left: $border-style;
+      }
+    }
+  }
+}
