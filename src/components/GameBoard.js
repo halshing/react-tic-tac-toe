@@ -7,6 +7,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes as Cross } from "@fortawesome/free-solid-svg-icons";
 import { faCircle as Circle } from "@fortawesome/free-regular-svg-icons";
 
+import { KEYS } from "../utils/player-keys";
+
 const GameBoard = ({ board, validateMove }) => {
   return (
     <div className="board">
@@ -27,8 +29,10 @@ const GameBoard = ({ board, validateMove }) => {
                 className={classnames("cell", border)}
                 onClick={() => validateMove(value, [c, r])}
               >
-                {typeof value === "boolean" && (
-                  <FontAwesomeIcon icon={value === true ? Cross : Circle} />
+                {typeof value === "string" && (
+                  <FontAwesomeIcon
+                    icon={value === KEYS.PLAYER1 ? Cross : Circle}
+                  />
                 )}
               </div>
             );

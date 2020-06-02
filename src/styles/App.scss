@@ -7,10 +7,12 @@ $cell-size: calc(#{$board-size / 3});
 $border-style: 1px solid black;
 
 .game {
+  display: flex;
+  
   .status {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    margin-top: 20px;
 
     div:first-child {
       padding-right: 10px;
