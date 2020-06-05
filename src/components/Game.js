@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import GameStatus from "./GameStatus";
 import GameBoard from "./GameBoard";
-import Players from "./Players";
+import GameStatus from "./GameStatus";
 import { KEYS } from "../utils/player-keys";
 
 const Game = () => {
@@ -24,7 +23,7 @@ const Game = () => {
   const [moves, countMoves] = useState(9);
   const [gamesPlayed, setGamesPlayed] = useState(0);
 
-  const newGame = () => {
+  const resetBoard = () => {
     setBoard(boardLayout);
     setNextPlayer(gamesPlayed % 2 === 0 ? KEYS.PLAYER1 : KEYS.PLAYER2);
     setWinner(null);
@@ -89,27 +88,27 @@ const Game = () => {
 
       switch (true) {
         case col === 0 && row === 0:
-          if (validateRow(0) || validateColumn(0) || validateCross1())
+          if (validateColumn(0) || validateRow(0) || validateCross1())
             endGame();
           else keepPlaying();
           break;
         case col === 0 && row === 1:
-          if (validateRow(1) || validateColumn(0)) endGame();
+          if (validateColumn(0) || validateRow(1)) endGame();
           else keepPlaying();
           break;
         case col === 0 && row === 2:
-          if (validateRow(2) || validateColumn(0) || validateCross2())
+          if (validateColumn(0) || validateRow(2) || validateCross2())
             endGame();
           else keepPlaying();
           break;
         case col === 1 && row === 0:
-          if (validateRow(0) || validateColumn(1)) endGame();
+          if (validateColumn(1) || validateRow(0)) endGame();
           else keepPlaying();
           break;
         case col === 1 && row === 1:
           if (
-            validateRow(1) ||
             validateColumn(1) ||
+            validateRow(1) ||
             validateCross1() ||
             validateCross2()
           )
@@ -117,20 +116,20 @@ const Game = () => {
           else keepPlaying();
           break;
         case col === 1 && row === 2:
-          if (validateRow(2) || validateColumn(1)) endGame();
+          if (validateColumn(1) || validateRow(2)) endGame();
           else keepPlaying();
           break;
         case col === 2 && row === 0:
-          if (validateRow(0) || validateColumn(2) || validateCross2())
+          if (validateColumn(2) || validateRow(0) || validateCross2())
             endGame();
           else keepPlaying();
           break;
         case col === 2 && row === 1:
-          if (validateRow(1) || validateColumn(2)) endGame();
+          if (validateColumn(2) || validateRow(1)) endGame();
           else keepPlaying();
           break;
         case col === 2 && row === 2:
-          if (validateRow(2) || validateColumn(2) || validateCross1())
+          if (validateColumn(2) || validateRow(2) || validateCross1())
             endGame();
           else keepPlaying();
           break;
@@ -143,13 +142,8 @@ const Game = () => {
 
   return (
     <div className="game">
-      <div>
-        <GameBoard board={board} validateMove={validateMove} />
-        <GameStatus newGame={newGame} />
-      </div>
-      <div>
-        <Players players={players} />
-      </div>
+      <GameBoard board={board} validateMove={validateMove} />
+      <GameStatus players={players} resetBoard={resetBoard} />
     </div>
   );
 };

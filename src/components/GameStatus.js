@@ -1,13 +1,14 @@
 import React from "react";
+import Players from "./Players";
 
-const GameStatus = ({ newGame }) => (
+const GameStatus = ({ players, resetBoard }) => (
   <div className="status">
+    <Players players={players} />
     <div className="btn-new-game">
-      <button type="button" onClick={() => newGame()}>
-        New Game
+      <button type="button" onClick={() => resetBoard()}>
+        Reset Board
       </button>
     </div>
-    <div className=""></div>
   </div>
 );
 

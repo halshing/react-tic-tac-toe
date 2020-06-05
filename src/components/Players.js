@@ -9,11 +9,11 @@ const Player = ({ player }) => (
 
 const Players = ({ players }) => {
   return (
-    <div>
+    <>
       <Player player={players.player1} />
       <Player player={players.draw} />
       <Player player={players.player2} />
-    </div>
+    </>
   );
 };
 
