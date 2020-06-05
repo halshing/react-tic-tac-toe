@@ -42,6 +42,12 @@ $border-style: 3px solid black;
         font-size: 20px;
         padding: 5px;
         cursor: pointer;
+        transition: background-color 0.5s, border-color 0.5s, color 0.5s;
+        &:hover {
+          background-color: #019922;
+          border-color: #00c028;
+          color: #ffffff;
+        }
       }
     }
   }
