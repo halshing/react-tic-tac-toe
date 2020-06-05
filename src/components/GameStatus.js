@@ -1,9 +1,9 @@
 import React from "react";
 import Players from "./Players";
 
-const GameStatus = ({ players, resetBoard }) => (
+const GameStatus = ({ currentPlayer, players, winner, draw, resetBoard }) => (
   <div className="status">
-    <Players players={players} />
+    <Players currentPlayer={currentPlayer} players={players} winner={winner} draw={draw} />
     <div className="btn-new-game">
       <button type="button" onClick={() => resetBoard()}>
         Reset Board

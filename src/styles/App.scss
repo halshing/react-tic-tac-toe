@@ -26,10 +26,35 @@ $border-style: 3px solid black;
 
       .name {
         font-weight: bold;
+
+        .turn {
+          border: solid #2600ff;
+          border-width: 0 3px 3px 0;
+          display: inline-block;
+          padding: 3px;
+          transform: rotate(-45deg);
+          margin: 0 10px 2px 0;
+        }
       }
 
       .wins {
         font-size: 40px;
+
+        @keyframes grow {
+          0% {
+            transform: scale(1);
+          }
+          50% {
+            transform: scale(2);
+          }
+          100% {
+            transform: scale(1);
+          }
+        }
+
+        &.winner {
+          animation: grow 2s;
+        }
       }
     }
 

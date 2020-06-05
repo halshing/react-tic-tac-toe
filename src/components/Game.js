@@ -143,7 +143,13 @@ const Game = () => {
   return (
     <div className="game">
       <GameBoard board={board} validateMove={validateMove} />
-      <GameStatus players={players} resetBoard={resetBoard} />
+      <GameStatus
+        currentPlayer={player}
+        players={players}
+        resetBoard={resetBoard}
+        winner={winner}
+        draw={winner === null && moves === 0}
+      />
     </div>
   );
 };
