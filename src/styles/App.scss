@@ -58,8 +58,43 @@ $border-style: 3px solid black;
         justify-content: center;
         height: $cell-size;
         width: $cell-size;
-        cursor: pointer;
-        font-size: 2.5em;
+
+        .player-icon {
+          &.player1 {
+            position: relative;
+            height: 100%;
+            width: 100%;
+
+            &::before {
+              content: "";
+              position: absolute;
+              border: 3px solid black;
+              border-radius: 5px;
+              height: 50%;
+              top: 22%;
+              left: 45%;
+              transform: rotate(45deg);
+            }
+
+            &::after {
+              content: "";
+              position: absolute;
+              border: 3px solid black;
+              border-radius: 5px;
+              height: 50%;
+              top: 22%;
+              left: 45%;
+              transform: rotate(135deg);
+            }
+          }
+
+          &.player2 {
+            border: 5px solid black;
+            border-radius: 50%;
+            height: 55%;
+            width: 55%;
+          }
+        }
       }
     }
 

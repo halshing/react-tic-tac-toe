@@ -1,12 +1,7 @@
 import React from "react";
 import classnames from "classnames";
 import getBorderStyling from "../utils/getBorderStyling";
-
-// icons
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes as Cross } from "@fortawesome/free-solid-svg-icons";
-import { faCircle as Circle } from "@fortawesome/free-regular-svg-icons";
-
+import { PlayerIcon1, PlayerIcon2 } from "./PlayerIcons";
 import { KEYS } from "../utils/player-keys";
 
 const GameBoard = ({ board, validateMove }) => {
@@ -29,11 +24,8 @@ const GameBoard = ({ board, validateMove }) => {
                 className={classnames("cell", border)}
                 onClick={() => validateMove(value, [c, r])}
               >
-                {typeof value === "string" && (
-                  <FontAwesomeIcon
-                    icon={value === KEYS.PLAYER1 ? Cross : Circle}
-                  />
-                )}
+                {typeof value === "string" &&
+                  (value === KEYS.PLAYER1 ? <PlayerIcon1 /> : <PlayerIcon2 />)}
               </div>
             );
           })}
