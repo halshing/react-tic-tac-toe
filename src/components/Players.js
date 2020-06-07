@@ -1,6 +1,6 @@
 import React from "react";
 import classnames from "classnames";
-import { KEYS } from "../utils/player-keys";
+import { PLAYER_KEYS } from "../utils/constants";
 
 const Player = ({ player, turn, winner }) => (
   <div className="player">
@@ -17,14 +17,14 @@ const Players = ({ currentPlayer, players, winner, draw }) => {
     <>
       <Player
         player={players.player1}
-        turn={currentPlayer === KEYS.PLAYER1}
-        winner={winner === KEYS.PLAYER1}
+        turn={currentPlayer === PLAYER_KEYS.PLAYER1}
+        winner={winner === PLAYER_KEYS.PLAYER1}
       />
       <Player player={players.draw} winner={draw} />
       <Player
         player={players.player2}
-        turn={currentPlayer === KEYS.PLAYER2}
-        winner={winner === KEYS.PLAYER2}
+        turn={currentPlayer === PLAYER_KEYS.PLAYER2}
+        winner={winner === PLAYER_KEYS.PLAYER2}
       />
     </>
   );

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import GameBoard from "./GameBoard";
 import GameStatus from "./GameStatus";
-import { KEYS } from "../utils/player-keys";
+import { PLAYER_KEYS } from "../utils/constants";
 
 const Game = () => {
   const boardLayout = [
@@ -18,14 +18,16 @@ const Game = () => {
     player2: { id: "Player 2", ...playerModel },
   });
   const [board, setBoard] = useState(boardLayout);
-  const [player, setNextPlayer] = useState(KEYS.PLAYER1);
+  const [player, setNextPlayer] = useState(PLAYER_KEYS.PLAYER1);
   const [winner, setWinner] = useState(null);
   const [moves, countMoves] = useState(9);
   const [gamesPlayed, setGamesPlayed] = useState(0);
 
   const resetBoard = () => {
     setBoard(boardLayout);
-    setNextPlayer(gamesPlayed % 2 === 0 ? KEYS.PLAYER1 : KEYS.PLAYER2);
+    setNextPlayer(
+      gamesPlayed % 2 === 0 ? PLAYER_KEYS.PLAYER1 : PLAYER_KEYS.PLAYER2
+    );
     setWinner(null);
     countMoves(9);
   };
@@ -41,7 +43,7 @@ const Game = () => {
 
   const keepPlaying = () => {
     setNextPlayer((prev) =>
-      prev === KEYS.PLAYER1 ? KEYS.PLAYER2 : KEYS.PLAYER1
+      prev === PLAYER_KEYS.PLAYER1 ? PLAYER_KEYS.PLAYER2 : PLAYER_KEYS.PLAYER1
     );
     if (moves === 1)
       setPlayers((prev) => ({
