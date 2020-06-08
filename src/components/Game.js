@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import GameBoard from "./GameBoard";
 import GameStatus from "./GameStatus";
-import { PLAYER_KEYS } from "../utils/constants";
+import { PLAYER_KEYS, GAME_TYPES } from "../utils/constants";
 
-const Game = () => {
+const Game = ({ gameType, newGame }) => {
   const boardLayout = [
     [null, null, null],
     [null, null, null],
@@ -12,16 +12,33 @@ const Game = () => {
 
   const playerModel = { name: "", wins: 0 };
 
-  const [players, setPlayers] = useState({
+  const setInitialPlayers = (props) => ({
     player1: { id: "Player 1", ...playerModel },
     draw: { id: "Tie", ...playerModel },
-    player2: { id: "Player 2", ...playerModel },
+    player2: {
+      id: "Player 2",
+      ...playerModel,
+      name: props.gameType === GAME_TYPES.PvC ? "Computer" : "",
+    },
   });
+
+  const initialPlayers = setInitialPlayers({ gameType });
+
+  const [players, setPlayers] = useState(initialPlayers);
   const [board, setBoard] = useState(boardLayout);
   const [player, setNextPlayer] = useState(PLAYER_KEYS.PLAYER1);
   const [winner, setWinner] = useState(null);
   const [moves, countMoves] = useState(9);
   const [gamesPlayed, setGamesPlayed] = useState(0);
+
+  useEffect(() => {
+    newGame(resetGame);
+  });
+
+  const resetGame = (props) => {
+    resetBoard();
+    setPlayers(setInitialPlayers({ gameType: props.gameType }));
+  };
 
   const resetBoard = () => {
     setBoard(boardLayout);
@@ -45,11 +62,13 @@ const Game = () => {
     setNextPlayer((prev) =>
       prev === PLAYER_KEYS.PLAYER1 ? PLAYER_KEYS.PLAYER2 : PLAYER_KEYS.PLAYER1
     );
-    if (moves === 1)
+    if (moves === 1) {
       setPlayers((prev) => ({
         ...prev,
         draw: { ...prev.draw, wins: prev.draw.wins + 1 },
       }));
+      setGamesPlayed((prev) => prev + 1);
+    }
   };
 
   const validateColumn = (col) => {
@@ -144,7 +163,14 @@ const Game = () => {
 
   return (
     <div className="game">
-      <GameBoard board={board} validateMove={validateMove} />
+      <GameBoard
+        board={board}
+        clickable={
+          gameType === GAME_TYPES.PvP ||
+          (gameType === GAME_TYPES.PvC && player === PLAYER_KEYS.PLAYER1)
+        }
+        validateMove={validateMove}
+      />
       <GameStatus
         currentPlayer={player}
         players={players}
