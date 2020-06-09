@@ -5,7 +5,7 @@ import { GAME_TYPES } from "../utils/constants";
 import "../styles/App.scss";
 
 const App = () => {
-  const [gameType, setGameType] = useState(GAME_TYPES.PvP);
+  const [gameType, setGameType] = useState(GAME_TYPES.PvC);
 
   const newGameRef = useRef();
 

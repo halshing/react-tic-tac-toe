@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import GameBoard from "./GameBoard";
 import GameStatus from "./GameStatus";
+import playComputer from "../utils/playComputer";
 import { PLAYER_KEYS, GAME_TYPES } from "../utils/constants";
 
 const Game = ({ gameType, newGame }) => {
@@ -30,6 +31,18 @@ const Game = ({ gameType, newGame }) => {
   const [winner, setWinner] = useState(null);
   const [moves, countMoves] = useState(9);
   const [gamesPlayed, setGamesPlayed] = useState(0);
+
+  useEffect(() => {
+    if (gameType === GAME_TYPES.PvC && player === PLAYER_KEYS.PLAYER2) {
+      const timer = setTimeout(() => {
+        playComputer({ board, validateMove });
+      }, 500);
+
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  });
 
   useEffect(() => {
     newGame(resetGame);
