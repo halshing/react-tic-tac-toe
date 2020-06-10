@@ -21,7 +21,7 @@ const App = () => {
   return (
     <div className="app">
       <h1>Tic Tac Toe</h1>
-      <GameType setGameType={resetGame} />
+      <GameType setGameType={resetGame} gameType={gameType} />
       <Game gameType={gameType} newGame={newGame} />
     </div>
   );
