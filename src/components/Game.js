@@ -29,6 +29,7 @@ const Game = ({ gameType, newGame }) => {
   const [board, setBoard] = useState(boardLayout);
   const [player, setNextPlayer] = useState(PLAYER_KEYS.PLAYER1);
   const [winner, setWinner] = useState(null);
+  const [winningCells, setWinningCells] = useState(null);
   const [moves, countMoves] = useState(9);
   const [gamesPlayed, setGamesPlayed] = useState(0);
 
@@ -60,15 +61,17 @@ const Game = ({ gameType, newGame }) => {
     );
     setWinner(null);
     countMoves(9);
+    setWinningCells(null);
   };
 
-  const endGame = () => {
+  const endGame = (cells) => {
     setWinner(player);
     setGamesPlayed((prev) => prev + 1);
     setPlayers((prev) => ({
       ...prev,
       [player]: { ...prev[player], wins: prev[player].wins + 1 },
     }));
+    setWinningCells(cells);
   };
 
   const keepPlaying = () => {
@@ -87,25 +90,49 @@ const Game = ({ gameType, newGame }) => {
   const validateColumn = (col) => {
     return []
       .concat(board[col][0], board[col][1], board[col][2])
-      .every((val) => val === player);
+      .every((val) => val === player)
+      ? [
+          [col, 0],
+          [col, 1],
+          [col, 2],
+        ]
+      : false;
   };
 
   const validateRow = (row) => {
     return []
       .concat(board[0][row], board[1][row], board[2][row])
-      .every((val) => val === player);
+      .every((val) => val === player)
+      ? [
+          [0, row],
+          [1, row],
+          [2, row],
+        ]
+      : false;
   };
 
   const validateCross1 = () => {
     return []
       .concat(board[0][0], board[1][1], board[2][2])
-      .every((val) => val === player);
+      .every((val) => val === player)
+      ? [
+          [0, 0],
+          [1, 1],
+          [2, 2],
+        ]
+      : false;
   };
 
   const validateCross2 = () => {
     return []
       .concat(board[0][2], board[1][1], board[2][0])
-      .every((val) => val === player);
+      .every((val) => val === player)
+      ? [
+          [0, 2],
+          [1, 1],
+          [2, 0],
+        ]
+      : false;
   };
 
   const validateMove = (value, cell) => {
@@ -120,51 +147,56 @@ const Game = ({ gameType, newGame }) => {
 
       setBoard(_board);
 
+      let cells;
+
       switch (true) {
         case col === 0 && row === 0:
-          if (validateColumn(0) || validateRow(0) || validateCross1())
-            endGame();
+          cells = validateColumn(0) || validateRow(0) || validateCross1();
+          if (Array.isArray(cells)) endGame(cells);
           else keepPlaying();
           break;
         case col === 0 && row === 1:
-          if (validateColumn(0) || validateRow(1)) endGame();
+          cells = validateColumn(0) || validateRow(1);
+          if (Array.isArray(cells)) endGame(cells);
           else keepPlaying();
           break;
         case col === 0 && row === 2:
-          if (validateColumn(0) || validateRow(2) || validateCross2())
-            endGame();
+          cells = validateColumn(0) || validateRow(2) || validateCross2();
+          if (Array.isArray(cells)) endGame(cells);
           else keepPlaying();
           break;
         case col === 1 && row === 0:
-          if (validateColumn(1) || validateRow(0)) endGame();
+          cells = validateColumn(1) || validateRow(0);
+          if (Array.isArray(cells)) endGame(cells);
           else keepPlaying();
           break;
         case col === 1 && row === 1:
-          if (
+          cells =
             validateColumn(1) ||
             validateRow(1) ||
             validateCross1() ||
-            validateCross2()
-          )
-            endGame();
+            validateCross2();
+          if (Array.isArray(cells)) endGame(cells);
           else keepPlaying();
           break;
         case col === 1 && row === 2:
-          if (validateColumn(1) || validateRow(2)) endGame();
+          cells = validateColumn(1) || validateRow(2);
+          if (Array.isArray(cells)) endGame(cells);
           else keepPlaying();
           break;
         case col === 2 && row === 0:
-          if (validateColumn(2) || validateRow(0) || validateCross2())
-            endGame();
+          cells = validateColumn(2) || validateRow(0) || validateCross2();
+          if (Array.isArray(cells)) endGame(cells);
           else keepPlaying();
           break;
         case col === 2 && row === 1:
-          if (validateColumn(2) || validateRow(1)) endGame();
+          cells = validateColumn(2) || validateRow(1);
+          if (Array.isArray(cells)) endGame(cells);
           else keepPlaying();
           break;
         case col === 2 && row === 2:
-          if (validateColumn(2) || validateRow(2) || validateCross1())
-            endGame();
+          cells = validateColumn(2) || validateRow(2) || validateCross1();
+          if (Array.isArray(cells)) endGame(cells);
           else keepPlaying();
           break;
         default:
@@ -183,6 +215,7 @@ const Game = ({ gameType, newGame }) => {
           (gameType === GAME_TYPES.PvC && player === PLAYER_KEYS.PLAYER1)
         }
         validateMove={validateMove}
+        winningCells={winningCells}
       />
       <GameStatus
         currentPlayer={player}

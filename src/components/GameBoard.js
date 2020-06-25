@@ -4,7 +4,7 @@ import getBorderStyling from "../utils/getBorderStyling";
 import { PlayerIcon1, PlayerIcon2 } from "./PlayerIcons";
 import { PLAYER_KEYS } from "../utils/constants";
 
-const GameBoard = ({ board, clickable, validateMove }) => {
+const GameBoard = ({ board, clickable, validateMove, winningCells }) => {
   return (
     <div className="board">
       {board.map((col, c) => (
@@ -21,7 +21,11 @@ const GameBoard = ({ board, clickable, validateMove }) => {
             return (
               <div
                 key={r}
-                className={classnames("cell", border)}
+                className={classnames("cell", border, {
+                  winner:
+                    winningCells &&
+                    winningCells.some((cell) => cell[0] === c && cell[1] === r),
+                })}
                 onClick={() => clickable && validateMove(value, [c, r])}
               >
                 {typeof value === "string" &&
